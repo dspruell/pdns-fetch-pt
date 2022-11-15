@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pdns-fetch-pt"
+description = "Wrapper client to fetch, store and render passive DNS (PDNS) data from RiskIQ PassiveTotal API"
+readme = "README.md"
+requires-python = ">=3.7"
+license = "ISC"
+keywords = []
+authors = [
+  { name = "Darren Spruell", email = "dspruell@sancho2k.net" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: ISC License (ISCL)",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "passivetotal",
+]
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/dspruell/pdns-fetch-pt#readme"
+Issues = "https://github.com/dspruell/pdns-fetch-pt/issues"
+Source = "https://github.com/dspruell/pdns-fetch-pt"
+
+[tool.hatch.version]
+path = "pdns_fetch_pt/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "pytest-cov",
+]
+[tool.hatch.envs.default.scripts]
+cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=pdns_fetch_pt --cov=tests {args}"
+no-cov = "cov --no-cov {args}"
+
+[[tool.hatch.envs.test.matrix]]
+python = ["37", "38", "39", "310", "311"]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+omit = [
+  "pdns_fetch_pt/__about__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
